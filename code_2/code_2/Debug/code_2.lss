@@ -1,0 +1,1196 @@
+
+code_2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006ac  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000720  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000006  00800060  00800060  00000720  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000720  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000750  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000060  00000000  00000000  0000078c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000120b  00000000  00000000  000007ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000064a  00000000  00000000  000019f7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000007af  00000000  00000000  00002041  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000a4  00000000  00000000  000027f0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000003a9  00000000  00000000  00002894  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000dfa  00000000  00000000  00002c3d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000050  00000000  00000000  00003a37  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a6 36       	cpi	r26, 0x66	; 102
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 20 03 	call	0x640	; 0x640 <main>
+  74:	0c 94 54 03 	jmp	0x6a8	; 0x6a8 <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <USART_Init>:
+
+
+void USART_Init( unsigned int ubrr)
+{
+	
+	UBRRH = (unsigned char)(ubrr>>8);
+  7c:	90 bd       	out	0x20, r25	; 32
+	UBRRL = (unsigned char)ubrr;
+  7e:	89 b9       	out	0x09, r24	; 9
+	UCSRB = (1<<RXEN) | (1<<TXEN);
+  80:	88 e1       	ldi	r24, 0x18	; 24
+  82:	8a b9       	out	0x0a, r24	; 10
+	UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);
+  84:	8e e8       	ldi	r24, 0x8E	; 142
+  86:	80 bd       	out	0x20, r24	; 32
+  88:	08 95       	ret
+
+0000008a <USART_Receive>:
+	
+}
+
+unsigned char USART_Receive( void )
+{
+	while( !( UCSRA & (1<<RXC)) );
+  8a:	5f 9b       	sbis	0x0b, 7	; 11
+  8c:	fe cf       	rjmp	.-4      	; 0x8a <USART_Receive>
+	return UDR;
+  8e:	8c b1       	in	r24, 0x0c	; 12
+}
+  90:	08 95       	ret
+
+00000092 <stepper1>:
+
+void stepper1(){
+
+	int sDelay=25; // Declared a variable as "sDelay" to control the speed of the rotation
+	
+	rounds = 2;
+  92:	82 e0       	ldi	r24, 0x02	; 2
+  94:	90 e0       	ldi	r25, 0x00	; 0
+  96:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  9a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	while (rounds != 0) // Clock Wise Rotation
+  9e:	34 c0       	rjmp	.+104    	; 0x108 <stepper1+0x76>
+	{
+		PORTB = 0x03;
+  a0:	83 e0       	ldi	r24, 0x03	; 3
+  a2:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a4:	2f e7       	ldi	r18, 0x7F	; 127
+  a6:	88 e3       	ldi	r24, 0x38	; 56
+  a8:	91 e0       	ldi	r25, 0x01	; 1
+  aa:	21 50       	subi	r18, 0x01	; 1
+  ac:	80 40       	sbci	r24, 0x00	; 0
+  ae:	90 40       	sbci	r25, 0x00	; 0
+  b0:	e1 f7       	brne	.-8      	; 0xaa <stepper1+0x18>
+  b2:	00 c0       	rjmp	.+0      	; 0xb4 <stepper1+0x22>
+  b4:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x02;
+  b6:	82 e0       	ldi	r24, 0x02	; 2
+  b8:	88 bb       	out	0x18, r24	; 24
+  ba:	2f e7       	ldi	r18, 0x7F	; 127
+  bc:	88 e3       	ldi	r24, 0x38	; 56
+  be:	91 e0       	ldi	r25, 0x01	; 1
+  c0:	21 50       	subi	r18, 0x01	; 1
+  c2:	80 40       	sbci	r24, 0x00	; 0
+  c4:	90 40       	sbci	r25, 0x00	; 0
+  c6:	e1 f7       	brne	.-8      	; 0xc0 <stepper1+0x2e>
+  c8:	00 c0       	rjmp	.+0      	; 0xca <stepper1+0x38>
+  ca:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x01;
+  cc:	81 e0       	ldi	r24, 0x01	; 1
+  ce:	88 bb       	out	0x18, r24	; 24
+  d0:	2f e7       	ldi	r18, 0x7F	; 127
+  d2:	88 e3       	ldi	r24, 0x38	; 56
+  d4:	91 e0       	ldi	r25, 0x01	; 1
+  d6:	21 50       	subi	r18, 0x01	; 1
+  d8:	80 40       	sbci	r24, 0x00	; 0
+  da:	90 40       	sbci	r25, 0x00	; 0
+  dc:	e1 f7       	brne	.-8      	; 0xd6 <stepper1+0x44>
+  de:	00 c0       	rjmp	.+0      	; 0xe0 <stepper1+0x4e>
+  e0:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x00;
+  e2:	18 ba       	out	0x18, r1	; 24
+  e4:	2f e7       	ldi	r18, 0x7F	; 127
+  e6:	88 e3       	ldi	r24, 0x38	; 56
+  e8:	91 e0       	ldi	r25, 0x01	; 1
+  ea:	21 50       	subi	r18, 0x01	; 1
+  ec:	80 40       	sbci	r24, 0x00	; 0
+  ee:	90 40       	sbci	r25, 0x00	; 0
+  f0:	e1 f7       	brne	.-8      	; 0xea <stepper1+0x58>
+  f2:	00 c0       	rjmp	.+0      	; 0xf4 <stepper1+0x62>
+  f4:	00 00       	nop
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+  f6:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  fa:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  fe:	01 97       	sbiw	r24, 0x01	; 1
+ 100:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 104:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+void stepper1(){
+
+	int sDelay=25; // Declared a variable as "sDelay" to control the speed of the rotation
+	
+	rounds = 2;
+	while (rounds != 0) // Clock Wise Rotation
+ 108:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 10c:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 110:	89 2b       	or	r24, r25
+ 112:	31 f6       	brne	.-116    	; 0xa0 <stepper1+0xe>
+		PORTB = 0x00;
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+	}
+}
+ 114:	08 95       	ret
+
+00000116 <stepper2>:
+
+void stepper2(){
+	
+	int tValue =0;
+	int phase =  7;
+	back_count = 2;
+ 116:	82 e0       	ldi	r24, 0x02	; 2
+ 118:	90 e0       	ldi	r25, 0x00	; 0
+ 11a:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <back_count+0x1>
+ 11e:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <back_count>
+}
+
+void stepper2(){
+	
+	int tValue =0;
+	int phase =  7;
+ 122:	87 e0       	ldi	r24, 0x07	; 7
+ 124:	90 e0       	ldi	r25, 0x00	; 0
+	}
+}
+
+void stepper2(){
+	
+	int tValue =0;
+ 126:	20 e0       	ldi	r18, 0x00	; 0
+ 128:	30 e0       	ldi	r19, 0x00	; 0
+	int phase =  7;
+	back_count = 2;
+	
+	while (tValue == 0)
+ 12a:	4d c0       	rjmp	.+154    	; 0x1c6 <stepper2+0xb0>
+	{
+		
+		if (phase==7)
+ 12c:	87 30       	cpi	r24, 0x07	; 7
+ 12e:	91 05       	cpc	r25, r1
+ 130:	61 f4       	brne	.+24     	; 0x14a <stepper2+0x34>
+		{
+			PORTB = 0x07;
+ 132:	27 e0       	ldi	r18, 0x07	; 7
+ 134:	28 bb       	out	0x18, r18	; 24
+ 136:	2f e7       	ldi	r18, 0x7F	; 127
+ 138:	38 e3       	ldi	r19, 0x38	; 56
+ 13a:	41 e0       	ldi	r20, 0x01	; 1
+ 13c:	21 50       	subi	r18, 0x01	; 1
+ 13e:	30 40       	sbci	r19, 0x00	; 0
+ 140:	40 40       	sbci	r20, 0x00	; 0
+ 142:	e1 f7       	brne	.-8      	; 0x13c <stepper2+0x26>
+ 144:	00 c0       	rjmp	.+0      	; 0x146 <stepper2+0x30>
+ 146:	00 00       	nop
+			_delay_ms(25);
+			--phase;
+ 148:	01 97       	sbiw	r24, 0x01	; 1
+		}
+		
+		if (phase==6)
+ 14a:	86 30       	cpi	r24, 0x06	; 6
+ 14c:	91 05       	cpc	r25, r1
+ 14e:	61 f4       	brne	.+24     	; 0x168 <stepper2+0x52>
+		{
+			PORTB = 0x06;
+ 150:	26 e0       	ldi	r18, 0x06	; 6
+ 152:	28 bb       	out	0x18, r18	; 24
+ 154:	2f e7       	ldi	r18, 0x7F	; 127
+ 156:	38 e3       	ldi	r19, 0x38	; 56
+ 158:	41 e0       	ldi	r20, 0x01	; 1
+ 15a:	21 50       	subi	r18, 0x01	; 1
+ 15c:	30 40       	sbci	r19, 0x00	; 0
+ 15e:	40 40       	sbci	r20, 0x00	; 0
+ 160:	e1 f7       	brne	.-8      	; 0x15a <stepper2+0x44>
+ 162:	00 c0       	rjmp	.+0      	; 0x164 <stepper2+0x4e>
+ 164:	00 00       	nop
+			_delay_ms(25);
+			--phase;
+ 166:	01 97       	sbiw	r24, 0x01	; 1
+		}
+		
+		if (phase==5)
+ 168:	85 30       	cpi	r24, 0x05	; 5
+ 16a:	91 05       	cpc	r25, r1
+ 16c:	61 f4       	brne	.+24     	; 0x186 <stepper2+0x70>
+		{
+			PORTB = 0x05;
+ 16e:	25 e0       	ldi	r18, 0x05	; 5
+ 170:	28 bb       	out	0x18, r18	; 24
+ 172:	2f e7       	ldi	r18, 0x7F	; 127
+ 174:	38 e3       	ldi	r19, 0x38	; 56
+ 176:	41 e0       	ldi	r20, 0x01	; 1
+ 178:	21 50       	subi	r18, 0x01	; 1
+ 17a:	30 40       	sbci	r19, 0x00	; 0
+ 17c:	40 40       	sbci	r20, 0x00	; 0
+ 17e:	e1 f7       	brne	.-8      	; 0x178 <stepper2+0x62>
+ 180:	00 c0       	rjmp	.+0      	; 0x182 <stepper2+0x6c>
+ 182:	00 00       	nop
+			_delay_ms(25);
+			--phase;
+ 184:	01 97       	sbiw	r24, 0x01	; 1
+		}
+		
+		if (phase==4)
+ 186:	84 30       	cpi	r24, 0x04	; 4
+ 188:	91 05       	cpc	r25, r1
+ 18a:	69 f4       	brne	.+26     	; 0x1a6 <stepper2+0x90>
+		{
+			PORTB = 0x04;
+ 18c:	24 e0       	ldi	r18, 0x04	; 4
+ 18e:	28 bb       	out	0x18, r18	; 24
+ 190:	2f e7       	ldi	r18, 0x7F	; 127
+ 192:	38 e3       	ldi	r19, 0x38	; 56
+ 194:	41 e0       	ldi	r20, 0x01	; 1
+ 196:	21 50       	subi	r18, 0x01	; 1
+ 198:	30 40       	sbci	r19, 0x00	; 0
+ 19a:	40 40       	sbci	r20, 0x00	; 0
+ 19c:	e1 f7       	brne	.-8      	; 0x196 <stepper2+0x80>
+ 19e:	00 c0       	rjmp	.+0      	; 0x1a0 <stepper2+0x8a>
+ 1a0:	00 00       	nop
+			_delay_ms(25);
+			--phase;
+ 1a2:	01 97       	sbiw	r24, 0x01	; 1
+ 1a4:	02 c0       	rjmp	.+4      	; 0x1aa <stepper2+0x94>
+		}
+		else
+		{
+			phase = 7;
+ 1a6:	87 e0       	ldi	r24, 0x07	; 7
+ 1a8:	90 e0       	ldi	r25, 0x00	; 0
+		}
+		back_count++;
+ 1aa:	20 91 64 00 	lds	r18, 0x0064	; 0x800064 <back_count>
+ 1ae:	30 91 65 00 	lds	r19, 0x0065	; 0x800065 <back_count+0x1>
+ 1b2:	2f 5f       	subi	r18, 0xFF	; 255
+ 1b4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1b6:	30 93 65 00 	sts	0x0065, r19	; 0x800065 <back_count+0x1>
+ 1ba:	20 93 64 00 	sts	0x0064, r18	; 0x800064 <back_count>
+		
+		if (((PINA,7)||(PINA,1))&&((PINA,5)||(PINA,6)))
+ 1be:	29 b3       	in	r18, 0x19	; 25
+ 1c0:	29 b3       	in	r18, 0x19	; 25
+		{
+			tValue = 1;
+ 1c2:	21 e0       	ldi	r18, 0x01	; 1
+ 1c4:	30 e0       	ldi	r19, 0x00	; 0
+	
+	int tValue =0;
+	int phase =  7;
+	back_count = 2;
+	
+	while (tValue == 0)
+ 1c6:	23 2b       	or	r18, r19
+ 1c8:	09 f4       	brne	.+2      	; 0x1cc <stepper2+0xb6>
+ 1ca:	b0 cf       	rjmp	.-160    	; 0x12c <stepper2+0x16>
+			tValue = 1;
+		}
+		
+	}
+
+}
+ 1cc:	08 95       	ret
+
+000001ce <stepper3>:
+
+
+
+void stepper3(){
+	
+	while (back_count != 0)
+ 1ce:	78 c0       	rjmp	.+240    	; 0x2c0 <stepper3+0xf2>
+	{
+		if (phase==4)
+ 1d0:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 1d4:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 1d8:	04 97       	sbiw	r24, 0x04	; 4
+ 1da:	a1 f4       	brne	.+40     	; 0x204 <stepper3+0x36>
+		{
+			PORTB = 0x04;
+ 1dc:	84 e0       	ldi	r24, 0x04	; 4
+ 1de:	88 bb       	out	0x18, r24	; 24
+ 1e0:	2f e7       	ldi	r18, 0x7F	; 127
+ 1e2:	88 e3       	ldi	r24, 0x38	; 56
+ 1e4:	91 e0       	ldi	r25, 0x01	; 1
+ 1e6:	21 50       	subi	r18, 0x01	; 1
+ 1e8:	80 40       	sbci	r24, 0x00	; 0
+ 1ea:	90 40       	sbci	r25, 0x00	; 0
+ 1ec:	e1 f7       	brne	.-8      	; 0x1e6 <stepper3+0x18>
+ 1ee:	00 c0       	rjmp	.+0      	; 0x1f0 <stepper3+0x22>
+ 1f0:	00 00       	nop
+			_delay_ms(25);
+			phase++;
+ 1f2:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 1f6:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 1fa:	01 96       	adiw	r24, 0x01	; 1
+ 1fc:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <phase+0x1>
+ 200:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <phase>
+		}
+		
+		if (phase==5)
+ 204:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 208:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 20c:	05 97       	sbiw	r24, 0x05	; 5
+ 20e:	a1 f4       	brne	.+40     	; 0x238 <stepper3+0x6a>
+		{
+			PORTB = 0x05;
+ 210:	85 e0       	ldi	r24, 0x05	; 5
+ 212:	88 bb       	out	0x18, r24	; 24
+ 214:	2f e7       	ldi	r18, 0x7F	; 127
+ 216:	88 e3       	ldi	r24, 0x38	; 56
+ 218:	91 e0       	ldi	r25, 0x01	; 1
+ 21a:	21 50       	subi	r18, 0x01	; 1
+ 21c:	80 40       	sbci	r24, 0x00	; 0
+ 21e:	90 40       	sbci	r25, 0x00	; 0
+ 220:	e1 f7       	brne	.-8      	; 0x21a <stepper3+0x4c>
+ 222:	00 c0       	rjmp	.+0      	; 0x224 <stepper3+0x56>
+ 224:	00 00       	nop
+			_delay_ms(25);
+			phase++;
+ 226:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 22a:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 22e:	01 96       	adiw	r24, 0x01	; 1
+ 230:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <phase+0x1>
+ 234:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <phase>
+		}
+		
+		if (phase==6)
+ 238:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 23c:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 240:	06 97       	sbiw	r24, 0x06	; 6
+ 242:	a1 f4       	brne	.+40     	; 0x26c <stepper3+0x9e>
+		{
+			PORTB = 0x06;
+ 244:	86 e0       	ldi	r24, 0x06	; 6
+ 246:	88 bb       	out	0x18, r24	; 24
+ 248:	2f e7       	ldi	r18, 0x7F	; 127
+ 24a:	88 e3       	ldi	r24, 0x38	; 56
+ 24c:	91 e0       	ldi	r25, 0x01	; 1
+ 24e:	21 50       	subi	r18, 0x01	; 1
+ 250:	80 40       	sbci	r24, 0x00	; 0
+ 252:	90 40       	sbci	r25, 0x00	; 0
+ 254:	e1 f7       	brne	.-8      	; 0x24e <stepper3+0x80>
+ 256:	00 c0       	rjmp	.+0      	; 0x258 <stepper3+0x8a>
+ 258:	00 00       	nop
+			_delay_ms(25);
+			phase++;
+ 25a:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 25e:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 262:	01 96       	adiw	r24, 0x01	; 1
+ 264:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <phase+0x1>
+ 268:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <phase>
+		}
+		
+		if (phase==7)
+ 26c:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 270:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 274:	07 97       	sbiw	r24, 0x07	; 7
+ 276:	a9 f4       	brne	.+42     	; 0x2a2 <stepper3+0xd4>
+		{
+			PORTB = 0x07;
+ 278:	87 e0       	ldi	r24, 0x07	; 7
+ 27a:	88 bb       	out	0x18, r24	; 24
+ 27c:	2f e7       	ldi	r18, 0x7F	; 127
+ 27e:	88 e3       	ldi	r24, 0x38	; 56
+ 280:	91 e0       	ldi	r25, 0x01	; 1
+ 282:	21 50       	subi	r18, 0x01	; 1
+ 284:	80 40       	sbci	r24, 0x00	; 0
+ 286:	90 40       	sbci	r25, 0x00	; 0
+ 288:	e1 f7       	brne	.-8      	; 0x282 <stepper3+0xb4>
+ 28a:	00 c0       	rjmp	.+0      	; 0x28c <stepper3+0xbe>
+ 28c:	00 00       	nop
+			_delay_ms(25);
+			phase++;
+ 28e:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <phase>
+ 292:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <phase+0x1>
+ 296:	01 96       	adiw	r24, 0x01	; 1
+ 298:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <phase+0x1>
+ 29c:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <phase>
+ 2a0:	06 c0       	rjmp	.+12     	; 0x2ae <stepper3+0xe0>
+		}
+		
+		else
+		{
+			phase = 4;
+ 2a2:	84 e0       	ldi	r24, 0x04	; 4
+ 2a4:	90 e0       	ldi	r25, 0x00	; 0
+ 2a6:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <phase+0x1>
+ 2aa:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <phase>
+		}
+		
+		back_count--;
+ 2ae:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <back_count>
+ 2b2:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <back_count+0x1>
+ 2b6:	01 97       	sbiw	r24, 0x01	; 1
+ 2b8:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <back_count+0x1>
+ 2bc:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <back_count>
+
+
+
+void stepper3(){
+	
+	while (back_count != 0)
+ 2c0:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <back_count>
+ 2c4:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <back_count+0x1>
+ 2c8:	89 2b       	or	r24, r25
+ 2ca:	09 f0       	breq	.+2      	; 0x2ce <stepper3+0x100>
+ 2cc:	81 cf       	rjmp	.-254    	; 0x1d0 <stepper3+0x2>
+		}
+		
+		back_count--;
+		
+	}
+}
+ 2ce:	08 95       	ret
+
+000002d0 <stepper4>:
+
+
+void stepper4(){
+	int sDelay=25; // Declared a variable as "sDelay" to control the speed of the rotation
+	
+	rounds = 2;
+ 2d0:	82 e0       	ldi	r24, 0x02	; 2
+ 2d2:	90 e0       	ldi	r25, 0x00	; 0
+ 2d4:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 2d8:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	while (rounds != 0) // Clock Wise Rotation
+ 2dc:	34 c0       	rjmp	.+104    	; 0x346 <stepper4+0x76>
+	{
+		PORTB = 0x00;
+ 2de:	18 ba       	out	0x18, r1	; 24
+ 2e0:	2f e7       	ldi	r18, 0x7F	; 127
+ 2e2:	88 e3       	ldi	r24, 0x38	; 56
+ 2e4:	91 e0       	ldi	r25, 0x01	; 1
+ 2e6:	21 50       	subi	r18, 0x01	; 1
+ 2e8:	80 40       	sbci	r24, 0x00	; 0
+ 2ea:	90 40       	sbci	r25, 0x00	; 0
+ 2ec:	e1 f7       	brne	.-8      	; 0x2e6 <stepper4+0x16>
+ 2ee:	00 c0       	rjmp	.+0      	; 0x2f0 <stepper4+0x20>
+ 2f0:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x01;
+ 2f2:	81 e0       	ldi	r24, 0x01	; 1
+ 2f4:	88 bb       	out	0x18, r24	; 24
+ 2f6:	2f e7       	ldi	r18, 0x7F	; 127
+ 2f8:	88 e3       	ldi	r24, 0x38	; 56
+ 2fa:	91 e0       	ldi	r25, 0x01	; 1
+ 2fc:	21 50       	subi	r18, 0x01	; 1
+ 2fe:	80 40       	sbci	r24, 0x00	; 0
+ 300:	90 40       	sbci	r25, 0x00	; 0
+ 302:	e1 f7       	brne	.-8      	; 0x2fc <stepper4+0x2c>
+ 304:	00 c0       	rjmp	.+0      	; 0x306 <stepper4+0x36>
+ 306:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x02;
+ 308:	82 e0       	ldi	r24, 0x02	; 2
+ 30a:	88 bb       	out	0x18, r24	; 24
+ 30c:	2f e7       	ldi	r18, 0x7F	; 127
+ 30e:	88 e3       	ldi	r24, 0x38	; 56
+ 310:	91 e0       	ldi	r25, 0x01	; 1
+ 312:	21 50       	subi	r18, 0x01	; 1
+ 314:	80 40       	sbci	r24, 0x00	; 0
+ 316:	90 40       	sbci	r25, 0x00	; 0
+ 318:	e1 f7       	brne	.-8      	; 0x312 <stepper4+0x42>
+ 31a:	00 c0       	rjmp	.+0      	; 0x31c <stepper4+0x4c>
+ 31c:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x03;
+ 31e:	83 e0       	ldi	r24, 0x03	; 3
+ 320:	88 bb       	out	0x18, r24	; 24
+ 322:	2f e7       	ldi	r18, 0x7F	; 127
+ 324:	88 e3       	ldi	r24, 0x38	; 56
+ 326:	91 e0       	ldi	r25, 0x01	; 1
+ 328:	21 50       	subi	r18, 0x01	; 1
+ 32a:	80 40       	sbci	r24, 0x00	; 0
+ 32c:	90 40       	sbci	r25, 0x00	; 0
+ 32e:	e1 f7       	brne	.-8      	; 0x328 <stepper4+0x58>
+ 330:	00 c0       	rjmp	.+0      	; 0x332 <stepper4+0x62>
+ 332:	00 00       	nop
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+ 334:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 338:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 33c:	01 97       	sbiw	r24, 0x01	; 1
+ 33e:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 342:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+
+void stepper4(){
+	int sDelay=25; // Declared a variable as "sDelay" to control the speed of the rotation
+	
+	rounds = 2;
+	while (rounds != 0) // Clock Wise Rotation
+ 346:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 34a:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 34e:	89 2b       	or	r24, r25
+ 350:	31 f6       	brne	.-116    	; 0x2de <stepper4+0xe>
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+	}
+	
+	rounds = 2;
+ 352:	82 e0       	ldi	r24, 0x02	; 2
+ 354:	90 e0       	ldi	r25, 0x00	; 0
+ 356:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 35a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	while (rounds != 0) // Clock Wise Rotation
+ 35e:	35 c0       	rjmp	.+106    	; 0x3ca <stepper4+0xfa>
+	{
+		PORTB = 0x0B;
+ 360:	8b e0       	ldi	r24, 0x0B	; 11
+ 362:	88 bb       	out	0x18, r24	; 24
+ 364:	2f e7       	ldi	r18, 0x7F	; 127
+ 366:	88 e3       	ldi	r24, 0x38	; 56
+ 368:	91 e0       	ldi	r25, 0x01	; 1
+ 36a:	21 50       	subi	r18, 0x01	; 1
+ 36c:	80 40       	sbci	r24, 0x00	; 0
+ 36e:	90 40       	sbci	r25, 0x00	; 0
+ 370:	e1 f7       	brne	.-8      	; 0x36a <stepper4+0x9a>
+ 372:	00 c0       	rjmp	.+0      	; 0x374 <stepper4+0xa4>
+ 374:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x0A;
+ 376:	8a e0       	ldi	r24, 0x0A	; 10
+ 378:	88 bb       	out	0x18, r24	; 24
+ 37a:	2f e7       	ldi	r18, 0x7F	; 127
+ 37c:	88 e3       	ldi	r24, 0x38	; 56
+ 37e:	91 e0       	ldi	r25, 0x01	; 1
+ 380:	21 50       	subi	r18, 0x01	; 1
+ 382:	80 40       	sbci	r24, 0x00	; 0
+ 384:	90 40       	sbci	r25, 0x00	; 0
+ 386:	e1 f7       	brne	.-8      	; 0x380 <stepper4+0xb0>
+ 388:	00 c0       	rjmp	.+0      	; 0x38a <stepper4+0xba>
+ 38a:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x09;
+ 38c:	89 e0       	ldi	r24, 0x09	; 9
+ 38e:	88 bb       	out	0x18, r24	; 24
+ 390:	2f e7       	ldi	r18, 0x7F	; 127
+ 392:	88 e3       	ldi	r24, 0x38	; 56
+ 394:	91 e0       	ldi	r25, 0x01	; 1
+ 396:	21 50       	subi	r18, 0x01	; 1
+ 398:	80 40       	sbci	r24, 0x00	; 0
+ 39a:	90 40       	sbci	r25, 0x00	; 0
+ 39c:	e1 f7       	brne	.-8      	; 0x396 <stepper4+0xc6>
+ 39e:	00 c0       	rjmp	.+0      	; 0x3a0 <stepper4+0xd0>
+ 3a0:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x08;
+ 3a2:	88 e0       	ldi	r24, 0x08	; 8
+ 3a4:	88 bb       	out	0x18, r24	; 24
+ 3a6:	2f e7       	ldi	r18, 0x7F	; 127
+ 3a8:	88 e3       	ldi	r24, 0x38	; 56
+ 3aa:	91 e0       	ldi	r25, 0x01	; 1
+ 3ac:	21 50       	subi	r18, 0x01	; 1
+ 3ae:	80 40       	sbci	r24, 0x00	; 0
+ 3b0:	90 40       	sbci	r25, 0x00	; 0
+ 3b2:	e1 f7       	brne	.-8      	; 0x3ac <stepper4+0xdc>
+ 3b4:	00 c0       	rjmp	.+0      	; 0x3b6 <stepper4+0xe6>
+ 3b6:	00 00       	nop
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+ 3b8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3bc:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3c0:	01 97       	sbiw	r24, 0x01	; 1
+ 3c2:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3c6:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+		
+		rounds -=1;
+	}
+	
+	rounds = 2;
+	while (rounds != 0) // Clock Wise Rotation
+ 3ca:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3ce:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3d2:	89 2b       	or	r24, r25
+ 3d4:	29 f6       	brne	.-118    	; 0x360 <stepper4+0x90>
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+	}
+	
+	rounds = 2;
+ 3d6:	82 e0       	ldi	r24, 0x02	; 2
+ 3d8:	90 e0       	ldi	r25, 0x00	; 0
+ 3da:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3de:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	while (rounds != 0) // Clock Wise Rotation
+ 3e2:	35 c0       	rjmp	.+106    	; 0x44e <__EEPROM_REGION_LENGTH__+0x4e>
+	{
+		PORTB = 0x08;
+ 3e4:	88 e0       	ldi	r24, 0x08	; 8
+ 3e6:	88 bb       	out	0x18, r24	; 24
+ 3e8:	2f e7       	ldi	r18, 0x7F	; 127
+ 3ea:	88 e3       	ldi	r24, 0x38	; 56
+ 3ec:	91 e0       	ldi	r25, 0x01	; 1
+ 3ee:	21 50       	subi	r18, 0x01	; 1
+ 3f0:	80 40       	sbci	r24, 0x00	; 0
+ 3f2:	90 40       	sbci	r25, 0x00	; 0
+ 3f4:	e1 f7       	brne	.-8      	; 0x3ee <stepper4+0x11e>
+ 3f6:	00 c0       	rjmp	.+0      	; 0x3f8 <stepper4+0x128>
+ 3f8:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x09;
+ 3fa:	89 e0       	ldi	r24, 0x09	; 9
+ 3fc:	88 bb       	out	0x18, r24	; 24
+ 3fe:	2f e7       	ldi	r18, 0x7F	; 127
+ 400:	88 e3       	ldi	r24, 0x38	; 56
+ 402:	91 e0       	ldi	r25, 0x01	; 1
+ 404:	21 50       	subi	r18, 0x01	; 1
+ 406:	80 40       	sbci	r24, 0x00	; 0
+ 408:	90 40       	sbci	r25, 0x00	; 0
+ 40a:	e1 f7       	brne	.-8      	; 0x404 <__EEPROM_REGION_LENGTH__+0x4>
+ 40c:	00 c0       	rjmp	.+0      	; 0x40e <__EEPROM_REGION_LENGTH__+0xe>
+ 40e:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x0A;
+ 410:	8a e0       	ldi	r24, 0x0A	; 10
+ 412:	88 bb       	out	0x18, r24	; 24
+ 414:	2f e7       	ldi	r18, 0x7F	; 127
+ 416:	88 e3       	ldi	r24, 0x38	; 56
+ 418:	91 e0       	ldi	r25, 0x01	; 1
+ 41a:	21 50       	subi	r18, 0x01	; 1
+ 41c:	80 40       	sbci	r24, 0x00	; 0
+ 41e:	90 40       	sbci	r25, 0x00	; 0
+ 420:	e1 f7       	brne	.-8      	; 0x41a <__EEPROM_REGION_LENGTH__+0x1a>
+ 422:	00 c0       	rjmp	.+0      	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
+ 424:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x0B;
+ 426:	8b e0       	ldi	r24, 0x0B	; 11
+ 428:	88 bb       	out	0x18, r24	; 24
+ 42a:	2f e7       	ldi	r18, 0x7F	; 127
+ 42c:	88 e3       	ldi	r24, 0x38	; 56
+ 42e:	91 e0       	ldi	r25, 0x01	; 1
+ 430:	21 50       	subi	r18, 0x01	; 1
+ 432:	80 40       	sbci	r24, 0x00	; 0
+ 434:	90 40       	sbci	r25, 0x00	; 0
+ 436:	e1 f7       	brne	.-8      	; 0x430 <__EEPROM_REGION_LENGTH__+0x30>
+ 438:	00 c0       	rjmp	.+0      	; 0x43a <__EEPROM_REGION_LENGTH__+0x3a>
+ 43a:	00 00       	nop
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+ 43c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 440:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 444:	01 97       	sbiw	r24, 0x01	; 1
+ 446:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 44a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+		
+		rounds -=1;
+	}
+	
+	rounds = 2;
+	while (rounds != 0) // Clock Wise Rotation
+ 44e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 452:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 456:	89 2b       	or	r24, r25
+ 458:	29 f6       	brne	.-118    	; 0x3e4 <stepper4+0x114>
+		PORTB = 0x0B;
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+	}
+}
+ 45a:	08 95       	ret
+
+0000045c <stepper5>:
+
+void stepper5()
+{
+	int sDelay=20; // Declared a variable as "sDelay" to control the speed of the rotation
+	
+	rounds = 2;
+ 45c:	82 e0       	ldi	r24, 0x02	; 2
+ 45e:	90 e0       	ldi	r25, 0x00	; 0
+ 460:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 464:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	while (rounds != 0) // Clock Wise Rotation
+ 468:	35 c0       	rjmp	.+106    	; 0x4d4 <stepper5+0x78>
+	{
+		PORTB = 0x0F;
+ 46a:	8f e0       	ldi	r24, 0x0F	; 15
+ 46c:	88 bb       	out	0x18, r24	; 24
+ 46e:	2f ef       	ldi	r18, 0xFF	; 255
+ 470:	89 ef       	ldi	r24, 0xF9	; 249
+ 472:	90 e0       	ldi	r25, 0x00	; 0
+ 474:	21 50       	subi	r18, 0x01	; 1
+ 476:	80 40       	sbci	r24, 0x00	; 0
+ 478:	90 40       	sbci	r25, 0x00	; 0
+ 47a:	e1 f7       	brne	.-8      	; 0x474 <stepper5+0x18>
+ 47c:	00 c0       	rjmp	.+0      	; 0x47e <stepper5+0x22>
+ 47e:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x0E;
+ 480:	8e e0       	ldi	r24, 0x0E	; 14
+ 482:	88 bb       	out	0x18, r24	; 24
+ 484:	2f ef       	ldi	r18, 0xFF	; 255
+ 486:	89 ef       	ldi	r24, 0xF9	; 249
+ 488:	90 e0       	ldi	r25, 0x00	; 0
+ 48a:	21 50       	subi	r18, 0x01	; 1
+ 48c:	80 40       	sbci	r24, 0x00	; 0
+ 48e:	90 40       	sbci	r25, 0x00	; 0
+ 490:	e1 f7       	brne	.-8      	; 0x48a <stepper5+0x2e>
+ 492:	00 c0       	rjmp	.+0      	; 0x494 <stepper5+0x38>
+ 494:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x0D;
+ 496:	8d e0       	ldi	r24, 0x0D	; 13
+ 498:	88 bb       	out	0x18, r24	; 24
+ 49a:	2f ef       	ldi	r18, 0xFF	; 255
+ 49c:	89 ef       	ldi	r24, 0xF9	; 249
+ 49e:	90 e0       	ldi	r25, 0x00	; 0
+ 4a0:	21 50       	subi	r18, 0x01	; 1
+ 4a2:	80 40       	sbci	r24, 0x00	; 0
+ 4a4:	90 40       	sbci	r25, 0x00	; 0
+ 4a6:	e1 f7       	brne	.-8      	; 0x4a0 <stepper5+0x44>
+ 4a8:	00 c0       	rjmp	.+0      	; 0x4aa <stepper5+0x4e>
+ 4aa:	00 00       	nop
+		_delay_ms(sDelay);
+		PORTB = 0x0C;
+ 4ac:	8c e0       	ldi	r24, 0x0C	; 12
+ 4ae:	88 bb       	out	0x18, r24	; 24
+ 4b0:	2f ef       	ldi	r18, 0xFF	; 255
+ 4b2:	89 ef       	ldi	r24, 0xF9	; 249
+ 4b4:	90 e0       	ldi	r25, 0x00	; 0
+ 4b6:	21 50       	subi	r18, 0x01	; 1
+ 4b8:	80 40       	sbci	r24, 0x00	; 0
+ 4ba:	90 40       	sbci	r25, 0x00	; 0
+ 4bc:	e1 f7       	brne	.-8      	; 0x4b6 <stepper5+0x5a>
+ 4be:	00 c0       	rjmp	.+0      	; 0x4c0 <stepper5+0x64>
+ 4c0:	00 00       	nop
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+ 4c2:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 4c6:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 4ca:	01 97       	sbiw	r24, 0x01	; 1
+ 4cc:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 4d0:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+void stepper5()
+{
+	int sDelay=20; // Declared a variable as "sDelay" to control the speed of the rotation
+	
+	rounds = 2;
+	while (rounds != 0) // Clock Wise Rotation
+ 4d4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 4d8:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 4dc:	89 2b       	or	r24, r25
+ 4de:	29 f6       	brne	.-118    	; 0x46a <stepper5+0xe>
+		PORTB = 0x0C;
+		_delay_ms(sDelay);
+		
+		rounds -=1;
+	}
+}
+ 4e0:	08 95       	ret
+
+000004e2 <stepper6>:
+
+
+ void stepper6(){
+	 	int delay=10; // Declared a variable as "delay" to control the speed of the rotation
+	 	
+	 	rounds = 2;
+ 4e2:	82 e0       	ldi	r24, 0x02	; 2
+ 4e4:	90 e0       	ldi	r25, 0x00	; 0
+ 4e6:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 4ea:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	 	while (rounds != 0) // Clock Wise Rotation
+ 4ee:	49 c0       	rjmp	.+146    	; 0x582 <stepper6+0xa0>
+	 	{
+		 	PORTB = 0x80;
+ 4f0:	80 e8       	ldi	r24, 0x80	; 128
+ 4f2:	88 bb       	out	0x18, r24	; 24
+ 4f4:	8f e3       	ldi	r24, 0x3F	; 63
+ 4f6:	9c e9       	ldi	r25, 0x9C	; 156
+ 4f8:	01 97       	sbiw	r24, 0x01	; 1
+ 4fa:	f1 f7       	brne	.-4      	; 0x4f8 <stepper6+0x16>
+ 4fc:	00 c0       	rjmp	.+0      	; 0x4fe <stepper6+0x1c>
+ 4fe:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0xC0;
+ 500:	80 ec       	ldi	r24, 0xC0	; 192
+ 502:	88 bb       	out	0x18, r24	; 24
+ 504:	8f e3       	ldi	r24, 0x3F	; 63
+ 506:	9c e9       	ldi	r25, 0x9C	; 156
+ 508:	01 97       	sbiw	r24, 0x01	; 1
+ 50a:	f1 f7       	brne	.-4      	; 0x508 <stepper6+0x26>
+ 50c:	00 c0       	rjmp	.+0      	; 0x50e <stepper6+0x2c>
+ 50e:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0x40;
+ 510:	80 e4       	ldi	r24, 0x40	; 64
+ 512:	88 bb       	out	0x18, r24	; 24
+ 514:	8f e3       	ldi	r24, 0x3F	; 63
+ 516:	9c e9       	ldi	r25, 0x9C	; 156
+ 518:	01 97       	sbiw	r24, 0x01	; 1
+ 51a:	f1 f7       	brne	.-4      	; 0x518 <stepper6+0x36>
+ 51c:	00 c0       	rjmp	.+0      	; 0x51e <stepper6+0x3c>
+ 51e:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0x60;
+ 520:	80 e6       	ldi	r24, 0x60	; 96
+ 522:	88 bb       	out	0x18, r24	; 24
+ 524:	8f e3       	ldi	r24, 0x3F	; 63
+ 526:	9c e9       	ldi	r25, 0x9C	; 156
+ 528:	01 97       	sbiw	r24, 0x01	; 1
+ 52a:	f1 f7       	brne	.-4      	; 0x528 <stepper6+0x46>
+ 52c:	00 c0       	rjmp	.+0      	; 0x52e <stepper6+0x4c>
+ 52e:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0x20;
+ 530:	80 e2       	ldi	r24, 0x20	; 32
+ 532:	88 bb       	out	0x18, r24	; 24
+ 534:	8f e3       	ldi	r24, 0x3F	; 63
+ 536:	9c e9       	ldi	r25, 0x9C	; 156
+ 538:	01 97       	sbiw	r24, 0x01	; 1
+ 53a:	f1 f7       	brne	.-4      	; 0x538 <stepper6+0x56>
+ 53c:	00 c0       	rjmp	.+0      	; 0x53e <stepper6+0x5c>
+ 53e:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0x30;
+ 540:	80 e3       	ldi	r24, 0x30	; 48
+ 542:	88 bb       	out	0x18, r24	; 24
+ 544:	8f e3       	ldi	r24, 0x3F	; 63
+ 546:	9c e9       	ldi	r25, 0x9C	; 156
+ 548:	01 97       	sbiw	r24, 0x01	; 1
+ 54a:	f1 f7       	brne	.-4      	; 0x548 <stepper6+0x66>
+ 54c:	00 c0       	rjmp	.+0      	; 0x54e <stepper6+0x6c>
+ 54e:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0x10;
+ 550:	80 e1       	ldi	r24, 0x10	; 16
+ 552:	88 bb       	out	0x18, r24	; 24
+ 554:	8f e3       	ldi	r24, 0x3F	; 63
+ 556:	9c e9       	ldi	r25, 0x9C	; 156
+ 558:	01 97       	sbiw	r24, 0x01	; 1
+ 55a:	f1 f7       	brne	.-4      	; 0x558 <stepper6+0x76>
+ 55c:	00 c0       	rjmp	.+0      	; 0x55e <stepper6+0x7c>
+ 55e:	00 00       	nop
+		 	_delay_ms(delay);
+		 	PORTB = 0x90;
+ 560:	80 e9       	ldi	r24, 0x90	; 144
+ 562:	88 bb       	out	0x18, r24	; 24
+ 564:	8f e3       	ldi	r24, 0x3F	; 63
+ 566:	9c e9       	ldi	r25, 0x9C	; 156
+ 568:	01 97       	sbiw	r24, 0x01	; 1
+ 56a:	f1 f7       	brne	.-4      	; 0x568 <stepper6+0x86>
+ 56c:	00 c0       	rjmp	.+0      	; 0x56e <stepper6+0x8c>
+ 56e:	00 00       	nop
+		 	_delay_ms(delay);
+			 		 	
+		 	rounds -=1;
+ 570:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 574:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 578:	01 97       	sbiw	r24, 0x01	; 1
+ 57a:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 57e:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+
+ void stepper6(){
+	 	int delay=10; // Declared a variable as "delay" to control the speed of the rotation
+	 	
+	 	rounds = 2;
+	 	while (rounds != 0) // Clock Wise Rotation
+ 582:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 586:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 58a:	89 2b       	or	r24, r25
+ 58c:	09 f0       	breq	.+2      	; 0x590 <stepper6+0xae>
+ 58e:	b0 cf       	rjmp	.-160    	; 0x4f0 <stepper6+0xe>
+		 	_delay_ms(delay);
+			 		 	
+		 	rounds -=1;
+	 	}
+		 
+		 rounds = 2;
+ 590:	82 e0       	ldi	r24, 0x02	; 2
+ 592:	90 e0       	ldi	r25, 0x00	; 0
+ 594:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 598:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+		 while (rounds != 0) // Clock Wise Rotation
+ 59c:	49 c0       	rjmp	.+146    	; 0x630 <stepper6+0x14e>
+		 {
+			 PORTB = 0x10;
+ 59e:	80 e1       	ldi	r24, 0x10	; 16
+ 5a0:	88 bb       	out	0x18, r24	; 24
+ 5a2:	8f e3       	ldi	r24, 0x3F	; 63
+ 5a4:	9c e9       	ldi	r25, 0x9C	; 156
+ 5a6:	01 97       	sbiw	r24, 0x01	; 1
+ 5a8:	f1 f7       	brne	.-4      	; 0x5a6 <stepper6+0xc4>
+ 5aa:	00 c0       	rjmp	.+0      	; 0x5ac <stepper6+0xca>
+ 5ac:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0x30;
+ 5ae:	80 e3       	ldi	r24, 0x30	; 48
+ 5b0:	88 bb       	out	0x18, r24	; 24
+ 5b2:	8f e3       	ldi	r24, 0x3F	; 63
+ 5b4:	9c e9       	ldi	r25, 0x9C	; 156
+ 5b6:	01 97       	sbiw	r24, 0x01	; 1
+ 5b8:	f1 f7       	brne	.-4      	; 0x5b6 <stepper6+0xd4>
+ 5ba:	00 c0       	rjmp	.+0      	; 0x5bc <stepper6+0xda>
+ 5bc:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0x20;
+ 5be:	80 e2       	ldi	r24, 0x20	; 32
+ 5c0:	88 bb       	out	0x18, r24	; 24
+ 5c2:	8f e3       	ldi	r24, 0x3F	; 63
+ 5c4:	9c e9       	ldi	r25, 0x9C	; 156
+ 5c6:	01 97       	sbiw	r24, 0x01	; 1
+ 5c8:	f1 f7       	brne	.-4      	; 0x5c6 <stepper6+0xe4>
+ 5ca:	00 c0       	rjmp	.+0      	; 0x5cc <stepper6+0xea>
+ 5cc:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0x60;
+ 5ce:	80 e6       	ldi	r24, 0x60	; 96
+ 5d0:	88 bb       	out	0x18, r24	; 24
+ 5d2:	8f e3       	ldi	r24, 0x3F	; 63
+ 5d4:	9c e9       	ldi	r25, 0x9C	; 156
+ 5d6:	01 97       	sbiw	r24, 0x01	; 1
+ 5d8:	f1 f7       	brne	.-4      	; 0x5d6 <stepper6+0xf4>
+ 5da:	00 c0       	rjmp	.+0      	; 0x5dc <stepper6+0xfa>
+ 5dc:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0x40;
+ 5de:	80 e4       	ldi	r24, 0x40	; 64
+ 5e0:	88 bb       	out	0x18, r24	; 24
+ 5e2:	8f e3       	ldi	r24, 0x3F	; 63
+ 5e4:	9c e9       	ldi	r25, 0x9C	; 156
+ 5e6:	01 97       	sbiw	r24, 0x01	; 1
+ 5e8:	f1 f7       	brne	.-4      	; 0x5e6 <stepper6+0x104>
+ 5ea:	00 c0       	rjmp	.+0      	; 0x5ec <stepper6+0x10a>
+ 5ec:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0xC0;
+ 5ee:	80 ec       	ldi	r24, 0xC0	; 192
+ 5f0:	88 bb       	out	0x18, r24	; 24
+ 5f2:	8f e3       	ldi	r24, 0x3F	; 63
+ 5f4:	9c e9       	ldi	r25, 0x9C	; 156
+ 5f6:	01 97       	sbiw	r24, 0x01	; 1
+ 5f8:	f1 f7       	brne	.-4      	; 0x5f6 <stepper6+0x114>
+ 5fa:	00 c0       	rjmp	.+0      	; 0x5fc <stepper6+0x11a>
+ 5fc:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0x80;
+ 5fe:	80 e8       	ldi	r24, 0x80	; 128
+ 600:	88 bb       	out	0x18, r24	; 24
+ 602:	8f e3       	ldi	r24, 0x3F	; 63
+ 604:	9c e9       	ldi	r25, 0x9C	; 156
+ 606:	01 97       	sbiw	r24, 0x01	; 1
+ 608:	f1 f7       	brne	.-4      	; 0x606 <stepper6+0x124>
+ 60a:	00 c0       	rjmp	.+0      	; 0x60c <stepper6+0x12a>
+ 60c:	00 00       	nop
+			 _delay_ms(delay);
+			 PORTB = 0x90;
+ 60e:	80 e9       	ldi	r24, 0x90	; 144
+ 610:	88 bb       	out	0x18, r24	; 24
+ 612:	8f e3       	ldi	r24, 0x3F	; 63
+ 614:	9c e9       	ldi	r25, 0x9C	; 156
+ 616:	01 97       	sbiw	r24, 0x01	; 1
+ 618:	f1 f7       	brne	.-4      	; 0x616 <stepper6+0x134>
+ 61a:	00 c0       	rjmp	.+0      	; 0x61c <stepper6+0x13a>
+ 61c:	00 00       	nop
+			 _delay_ms(delay);
+			 
+			 rounds -=1;
+ 61e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 622:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 626:	01 97       	sbiw	r24, 0x01	; 1
+ 628:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 62c:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			 		 	
+		 	rounds -=1;
+	 	}
+		 
+		 rounds = 2;
+		 while (rounds != 0) // Clock Wise Rotation
+ 630:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 634:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 638:	89 2b       	or	r24, r25
+ 63a:	09 f0       	breq	.+2      	; 0x63e <stepper6+0x15c>
+ 63c:	b0 cf       	rjmp	.-160    	; 0x59e <stepper6+0xbc>
+			 PORTB = 0x90;
+			 _delay_ms(delay);
+			 
+			 rounds -=1;
+		 }
+ } 
+ 63e:	08 95       	ret
+
+00000640 <main>:
+
+
+
+int main(){
+	DDRB = 0xFF;
+ 640:	8f ef       	ldi	r24, 0xFF	; 255
+ 642:	87 bb       	out	0x17, r24	; 23
+	DDRA = 0x00;
+ 644:	1a ba       	out	0x1a, r1	; 26
+	USART_Init(MYUBRR);
+ 646:	87 e6       	ldi	r24, 0x67	; 103
+ 648:	90 e0       	ldi	r25, 0x00	; 0
+ 64a:	0e 94 3e 00 	call	0x7c	; 0x7c <USART_Init>
+	int h = USART_Receive();
+ 64e:	0e 94 45 00 	call	0x8a	; 0x8a <USART_Receive>
+	
+	while(1)
+	{
+		if(h=='A')
+ 652:	81 34       	cpi	r24, 0x41	; 65
+ 654:	f1 f7       	brne	.-4      	; 0x652 <main+0x12>
+		{
+			stepper1();
+ 656:	0e 94 49 00 	call	0x92	; 0x92 <stepper1>
+			break;
+		}
+	}
+	h = USART_Receive();
+ 65a:	0e 94 45 00 	call	0x8a	; 0x8a <USART_Receive>
+	
+	while(1)
+	{
+		if(h=='B')
+ 65e:	82 34       	cpi	r24, 0x42	; 66
+ 660:	f1 f7       	brne	.-4      	; 0x65e <main+0x1e>
+		{
+			stepper2();
+ 662:	0e 94 8b 00 	call	0x116	; 0x116 <stepper2>
+			break;
+		}
+	}
+	h = USART_Receive();
+ 666:	0e 94 45 00 	call	0x8a	; 0x8a <USART_Receive>
+	
+	
+	while(1)
+	{
+		if(h=='C')
+ 66a:	83 34       	cpi	r24, 0x43	; 67
+ 66c:	f1 f7       	brne	.-4      	; 0x66a <main+0x2a>
+		{
+			stepper3();
+ 66e:	0e 94 e7 00 	call	0x1ce	; 0x1ce <stepper3>
+ 672:	8f e3       	ldi	r24, 0x3F	; 63
+ 674:	9c e9       	ldi	r25, 0x9C	; 156
+ 676:	01 97       	sbiw	r24, 0x01	; 1
+ 678:	f1 f7       	brne	.-4      	; 0x676 <main+0x36>
+ 67a:	00 c0       	rjmp	.+0      	; 0x67c <main+0x3c>
+ 67c:	00 00       	nop
+			_delay_ms(10);
+			stepper4();
+ 67e:	0e 94 68 01 	call	0x2d0	; 0x2d0 <stepper4>
+ 682:	8f e3       	ldi	r24, 0x3F	; 63
+ 684:	9c e9       	ldi	r25, 0x9C	; 156
+ 686:	01 97       	sbiw	r24, 0x01	; 1
+ 688:	f1 f7       	brne	.-4      	; 0x686 <main+0x46>
+ 68a:	00 c0       	rjmp	.+0      	; 0x68c <main+0x4c>
+ 68c:	00 00       	nop
+			_delay_ms(10);
+			stepper5();
+ 68e:	0e 94 2e 02 	call	0x45c	; 0x45c <stepper5>
+ 692:	8f e3       	ldi	r24, 0x3F	; 63
+ 694:	9c e9       	ldi	r25, 0x9C	; 156
+ 696:	01 97       	sbiw	r24, 0x01	; 1
+ 698:	f1 f7       	brne	.-4      	; 0x696 <main+0x56>
+ 69a:	00 c0       	rjmp	.+0      	; 0x69c <main+0x5c>
+ 69c:	00 00       	nop
+			_delay_ms(10);
+			stepper6();
+ 69e:	0e 94 71 02 	call	0x4e2	; 0x4e2 <stepper6>
+			break;
+
+		}
+	}
+	return 0;
+}
+ 6a2:	80 e0       	ldi	r24, 0x00	; 0
+ 6a4:	90 e0       	ldi	r25, 0x00	; 0
+ 6a6:	08 95       	ret
+
+000006a8 <_exit>:
+ 6a8:	f8 94       	cli
+
+000006aa <__stop_program>:
+ 6aa:	ff cf       	rjmp	.-2      	; 0x6aa <__stop_program>
